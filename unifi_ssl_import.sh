@@ -26,14 +26,14 @@ UNIFI_HOSTNAME=hostname.example.com
 UNIFI_SERVICE=unifi
 
 # Uncomment following three lines for Fedora/RedHat/CentOS
-UNIFI_DIR=/opt/UniFi
-#JAVA_DIR=${UNIFI_DIR}
-KEYSTORE=${UNIFI_DIR}/data/keystore
+#UNIFI_DIR=/opt/UniFi
+##JAVA_DIR=${UNIFI_DIR}
+#KEYSTORE=${UNIFI_DIR}/data/keystore
 
 # Uncomment following three lines for Debian/Ubuntu
-#UNIFI_DIR=/var/lib/unifi
-##JAVA_DIR=/usr/lib/unifi
-#KEYSTORE=${UNIFI_DIR}/keystore
+UNIFI_DIR=/var/lib/unifi
+#JAVA_DIR=/usr/lib/unifi
+KEYSTORE=${UNIFI_DIR}/keystore
 
 # Uncomment following three lines for CloudKey
 #UNIFI_DIR=/var/lib/unifi
@@ -99,7 +99,7 @@ P12_TEMP=$(mktemp)
 
 # Stop the UniFi Controller
 printf "\nStopping UniFi Controller...\n"
-service "${UNIFI_SERVICE}" stop
+systemctl stop "${UNIFI_SERVICE}"
 
 if [[ ${LE_MODE} == "true" ]]; then
 	
@@ -160,7 +160,7 @@ rm -f "${P12_TEMP}"
 	
 # Restart the UniFi Controller to pick up the updated keystore
 printf "\nRestarting UniFi Controller to apply new Let's Encrypt SSL certificate...\n"
-service "${UNIFI_SERVICE}" start
+systemctl start "${UNIFI_SERVICE}"
 
 # That's all, folks!
 printf "\nDone!\n"
